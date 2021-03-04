@@ -6,7 +6,10 @@ namespace Dio.Bank
     {
         static void Main(string[] args)
         {
+            Conta minhaConta = new Conta();
+
             Console.WriteLine("Hello World!");
+            Console.ReadLine();
         }
     }
 }
