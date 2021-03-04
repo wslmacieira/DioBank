@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Dio.Bank
 {
     class Program
     {
+        static List<Conta> listaContas = new List<Conta>();
         static void Main(string[] args)
         {
-            Conta minhaConta = new Conta(TipoConta.PessoaFisica, 0, 0, "Wslmacieira");
             string opcaoUsuario = ObterOpcaoUsuario();
 
             while (opcaoUsuario.ToUpper() != "X")
@@ -14,10 +15,10 @@ namespace Dio.Bank
                 switch (opcaoUsuario)
                 {
                     case "1":
-                        //ListarContas();
+                        ListarContas();
                         break;
                     case "2":
-                        //InserirConta();
+                        InserirConta();
                         break;
                     case "3":
                         //Transferir();
@@ -39,9 +40,48 @@ namespace Dio.Bank
                 opcaoUsuario = ObterOpcaoUsuario();
             }
 
-            Console.WriteLine(minhaConta.ToString());
-
             Console.ReadLine();
+        }
+
+        private static void InserirConta()
+        {
+            Console.WriteLine("Inserir nova conta");
+
+            Console.WriteLine("Digite 1 para Conta Fisica ou 2 para Juridica: ");
+            int entradaTipoConta = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Digite o Nome do Cliente: ");
+            string entradaNome = Console.ReadLine();
+
+            Console.WriteLine("Digite o saldo inicial: ");
+            double entradaSaldo = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Digite o crédito: ");
+            double entradaCredito = double.Parse(Console.ReadLine());
+
+            Conta novaConta = new Conta(tipoConta: (TipoConta)entradaTipoConta,
+                                        saldo: entradaSaldo,
+                                        credito: entradaCredito,
+                                        nome: entradaNome);
+
+            listaContas.Add(novaConta);
+        }
+
+        private static void ListarContas()
+        {
+            Console.WriteLine("Listar Contas");
+
+            if (listaContas.Count == 0)
+            {
+                Console.WriteLine("Nenhuma conta cadastrada.");
+            }
+
+            for (int i = 0; i < listaContas.Count; i++)
+            {
+                Conta conta = listaContas[i];
+                Console.Write("#{0} - ", i);
+                Console.WriteLine(conta);
+            }
         }
 
         private static string ObterOpcaoUsuario()
